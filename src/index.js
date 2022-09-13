@@ -3,11 +3,18 @@ const stateElement = document.getElementById("stateElement");
 const planElement  = document.getElementById("planElement"); 
 const periodElement = document.getElementById("periodSelector");
 const ageElement = document.getElementById("ageElement");           
-
+const carrierOp1 = document.getElementById("carrierOp1");
+const carrierOp2 = document.getElementById("carrierOp2");
+const premiumOp1 = document.getElementById("premiumOp1");
+const premiumOp2 = document.getElementById("premiumOp2");
+const annualOp1 = document.getElementById("annualOp1");
+const annualOp2 = document.getElementById("annualOp2");
 
 const stateValue    = stateElement.value;
 const planValue     = planElement.value;
 const periodValue   = periodElement.value;
+
+var ageRaa = 0;
 
 const getAge = (myBirthdate)=>{
     
@@ -37,8 +44,8 @@ const getPremium = ()=>{
 
 dateBirth.addEventListener("change",function(){
     
-    console.log('Jaaa',this.value)
     if(this.value){
+        ageRaa = this.value;
         console.log(`My age is : ${getAge(this.value)} years old`);
     }
 });
@@ -57,8 +64,8 @@ periodElement.addEventListener("change",function(){
 });
 
 ageElement.addEventListener("change",function(){
-    console.log(this.value);   
+    console.log('Age',this.value);   
 });
 
 console.log('El value',dateBirth.value)
-console.log('Raaa')
+console.log('Raaa',ageRaa)
