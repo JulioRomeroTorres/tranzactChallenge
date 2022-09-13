@@ -1,0 +1,37 @@
+.firstPart{
+    align-items: center;
+    justify-content: center;
+}
+
+.secondPart{
+    display: flex   ;
+    align-items: center;
+    justify-content: center;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;    
+}
+
+button{
+    background-color: transparent;
+    font-weight: semibold;
+    color: #444;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    border:  2px solid #eee ;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 1s ease;
+    box-shadow: 0.5rem 0.5rem 1rem #ccc,
+                -0.5rem -0.5rem 1rem #fff;
+}
+
+button:hover{
+    box-shadow: 0.5rem 0.5rem 1rem #fff,
+                -0.5rem -0.5rem 1rem #ccc;   
+}
+button:active{
+    box-shadow: insert 0.5rem 1rem #fff,
+                0.2rem -0.5rem 1rem #ccc;   
+}
