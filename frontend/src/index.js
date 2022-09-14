@@ -141,22 +141,22 @@ planElement.addEventListener("change",function(){
 periodElement.addEventListener("change",function(){
 
     while (carrierCont.firstChild) {
-        console.log('Raaaa 1')
+        //console.log('Raaaa 1')
         carrierCont.removeChild(carrierCont.lastChild);
     }
 
     while (premiumCont.firstChild) {
-        console.log('Raaaa 2')
+        //console.log('Raaaa 2')
         premiumCont.removeChild(premiumCont.lastChild);
     }
 
     while (annualCont.firstChild) {
-        console.log('Raaaa 3')
+        //console.log('Raaaa 3')
         annualCont.removeChild(annualCont.lastChild);
     }
 
     while (mounthCont.firstChild) {
-        console.log('Raaaa 4')
+        //console.log('Raaaa 4')
         mounthCont.removeChild(mounthCont.lastChild);
     }
 
