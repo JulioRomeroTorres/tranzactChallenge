@@ -22,12 +22,12 @@ var requestData ={
     ageCalendar:     0,
     stateInput:      0,
     planInput:       0,
-    periodInput:     0,
     ageInput:        0,
     mounthCalendar : 0
 };
 
 var responseData = [];
+var countElement = 0;
 
 const getAge = (myBirthdate)=>{
     
@@ -143,55 +143,65 @@ periodElement.addEventListener("change",function(){
         premiumCont.removeChild(premiumCont.lastChild);
     }
 
-    requestData.periodInput = this.value;
+    while (annualCont.firstChild) {
+        annualCont.removeChild(annualCont.lastChild);
+    }
+
+    while (mounthCont.firstChild) {
+        mounthCont.removeChild(mounthCont.lastChild);
+    }
+
 
     let periodInput = this.value;
-    let mountlyVal, annualVal;
+    let mountArr = [], annualArr = [];
 
     for(let i=0; i < responseData.length; i++){
-        if(data[i].carrier) carrierOp1.value = data[i].carrier;
-        if(data[i].carrier) carrierOp2.value = data[i].carrier;
-        if(data[i].carrier) annualOp1.value = data[i].premium;
-        if(data[i].carrier) annualOp2.value = data[i].premium;
+        if(responseData[i].carrier) carrierOp1.value = responseData[i].carrier;
+        if(responseData[i].carrier) carrierOp2.value = responseData[i].carrier;
+        if(responseData[i].carrier) annualOp1.value = responseData[i].premium;
+        if(responseData[i].carrier) annualOp2.value = responseData[i].premium;
     }
 
 
     switch(periodInput){
         case 'Quartely':
             for(let i = 0; i < responseData.length ; i++){
-                mountlyVal = responseData[i].premium/3.0;
-                annualVal = responseData[i].premium*4.0;
-                let div = document.createElement("div")
-                div.innerHTML = `<input type="number" id="premiumOp1"></input>`;
-                carrierCont.appendChild(div);
-                
+                mountArr.push(responseData[i].premium/3.0);
+                annualArr.push(responseData[i].premium*4.0);
             }
             break;
         case 'Mounthly':
             for(let i = 0; i < responseData.length ; i++){
-                mountlyVal = responseData[0].premium;
-                annualVal = responseData[0].premium*12.0;
+                mountArr.push(responseData[i].premium);
+                annualArr.push(responseData[i].premium*12.0);
                 
             }
             break;
         case 'Semi-Annual':
             for(let i = 0; i < responseData.length ; i++){
-                mountlyVal = responseData[0].premium/6.0;
-                annualVal = responseData[0].premium*2.0;
+                mountArr.push(responseData[i].premium/6.0);
+                annualArr.push(responseData[i].premium*2.0);
                 
             }
             
             break;
         default:
             for(let i = 0; i < responseData.length ; i++){
-                mountlyVal = responseData[0].premium/12.0;
-                annualVal = responseData[0].premium;
-                
+                mountArr.push(responseData[i].premium/12.0);
+                annualArr.push(responseData[i].premium);
             }
             break;
     }
 
-    console.log('period ', requestData.periodInput);
+        for(let i = 0; i < responseData.length ; i++){
+            //let div = document.createElement("div")
+            //console.log('El div', div)
+            carrierCont.innerHTML = `<input type="text" id="premiumOp${i+10}" maxlength = 10"></input>`;
+            const auxNumber  = document.getElementById(`premiumOp${i+10}`);
+            auxNumber.value = responseData[i].carrier;  
+            //carrierCont.appendChild(div);
+        }
+ 
     console.log('requestData Arr: ',requestData);
 });
 
