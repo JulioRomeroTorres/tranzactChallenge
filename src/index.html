@@ -17,7 +17,7 @@
 
             <div class="container">
                 <label for="stateSelector" > State </label>
-                <select name="stateElement" id="stateElement">
+                <select name="planElement" id="planElement">
                 <option value="" disabled selected>Type or Select</option>
                 <option value ="A" >A</option> 
                 <option value ="B" >B</option> 
@@ -25,7 +25,7 @@
                 </select>
             </label>
             <label for="planSelector" > Plan </label>
-                    <select name="planElement" id="planElement">
+                    <select name="stateElement" id="stateElement">
                     <option value="" disabled selected>Type or Select</option>
                     <option value ="NJ" >New Jers</option>  
                     <option value ="NY" >New York</option>  
@@ -46,7 +46,7 @@
         <div class="secondPart">
 
             <div class="card">
-                <button onclick="getPremium()">
+                <button id="buttonPremium" name = "buttonPremium" >
                     Get Premium
                 </button>
                 <label for="periodSelector">Period</label>  
@@ -63,29 +63,33 @@
                 <h3> Carrier </h3>
                 <input type="text" id="carrierOp1">
                 <input type="text" id="carrierOp2">
+                <div id="carrierCont"></div>
             </div>
             
             <div class="card">
                 <h4> Premium </h4>
                 <input type="number" id="premiumOp1">
                 <input type="number" id="premiumOp2">
+                <div id="premiumCont"></div>
             </div>
 
             <div class="card">
                 <h4> Annual </h4>
                 <input type="number" id="annualOp1">
                 <input type="number" id="annualOp2">
+                <div id="annualCont"></div> 
             </div>
 
             <div class="card">
                 <h4> Monthly </h4>
                 <input type="number">
                 <input type="number">
+                <div id="mounthCont"></div> 
             </div>
             
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="index.js"></script>
 </body>
 </html>
