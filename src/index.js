@@ -5,12 +5,6 @@ const planElement  = document.getElementById("planElement");
 
 const periodElement = document.getElementById("periodSelector");
 const ageElement = document.getElementById("ageElement");           
-const carrierOp1 = document.getElementById("carrierOp1");
-const carrierOp2 = document.getElementById("carrierOp2");
-const premiumOp1 = document.getElementById("premiumOp1");
-const premiumOp2 = document.getElementById("premiumOp2");
-const annualOp1 = document.getElementById("annualOp1");
-const annualOp2 = document.getElementById("annualOp2");
 const buttonPremium = document.getElementById("buttonPremium");
 
 const carrierCont = document.getElementById("carrierCont");
@@ -58,6 +52,7 @@ const getAge = (myBirthdate)=>{
 };
 
 const validData = (Data)=>{
+    
     const myList = Object.values(Data);
     
     for(let i = 0; i < myList.length; i++ ){
@@ -69,10 +64,12 @@ const validData = (Data)=>{
 
 async function getPremium(e){
 
-    if( !validData(requestData)  ) alert('Complete the information')
+    
+
+    if( !validData(requestData) ) alert('Complete the information, please')
     else{
         if( requestData.ageCalendar !== requestData.ageInput) 
-            alert('La Edada No es la adecuada')
+            alert('There is a problem with age')
         else{
 
             // Get petition
@@ -92,11 +89,20 @@ async function getPremium(e){
                 {
                     method:'GET'
                 });
-            console.log('Connect to server', res);
+
             const data = await res.json();
             console.log('Data from MySQl',data)
             
             responseData = data;
+            
+            if(responseData.length < 1){
+                document.getElementById("periodSelector").disabled = true;
+                alert('Query not founded')
+            }
+            else{
+                alert('Query founded')
+                document.getElementById("periodSelector").disabled = false;
+            }  
 
         }
     }
@@ -114,102 +120,92 @@ dateBirth.addEventListener("change",function(){
         
         requestData.ageCalendar    =  myAge[1];
         requestData.mounthCalendar =  myAge[0];
-        console.log(`My age is : ${myAge[1]} years old`);
         console.log('requestData Arr: ',requestData);   
     }
 
+    ageElement.value     = myAge[1];
+    requestData.ageInput = myAge[1]; 
 });
 
 stateElement.addEventListener("change",function(){
-            requestData.stateInput  =  this.value;
-            console.log('state ', requestData.stateInput);
-            console.log('requestData Arr: ',requestData);
+    requestData.stateInput  =  this.value;
+    console.log('requestData Arr: ',requestData);
 });
 
 
 planElement.addEventListener("change",function(){
     requestData.planInput = this.value;
-    console.log('plan ', requestData.planInput);
     console.log('requestData Arr: ',requestData);
 });
 
 periodElement.addEventListener("change",function(){
 
     while (carrierCont.firstChild) {
+        console.log('Raaaa 1')
         carrierCont.removeChild(carrierCont.lastChild);
     }
 
     while (premiumCont.firstChild) {
+        console.log('Raaaa 2')
         premiumCont.removeChild(premiumCont.lastChild);
     }
 
     while (annualCont.firstChild) {
+        console.log('Raaaa 3')
         annualCont.removeChild(annualCont.lastChild);
     }
 
     while (mounthCont.firstChild) {
+        console.log('Raaaa 4')
         mounthCont.removeChild(mounthCont.lastChild);
     }
 
 
     let periodInput = this.value;
-    let mountArr = [], annualArr = [];
+    let mounthValue, annualValue;
 
-    for(let i=0; i < responseData.length; i++){
-        if(responseData[i].carrier) carrierOp1.value = responseData[i].carrier;
-        if(responseData[i].carrier) carrierOp2.value = responseData[i].carrier;
-        if(responseData[i].carrier) annualOp1.value = responseData[i].premium;
-        if(responseData[i].carrier) annualOp2.value = responseData[i].premium;
-    }
+    for(let i = 0; i < responseData.length; i++){
 
-
-    switch(periodInput){
-        case 'Quartely':
-            for(let i = 0; i < responseData.length ; i++){
-                mountArr.push(responseData[i].premium/3.0);
-                annualArr.push(responseData[i].premium*4.0);
-            }
-            break;
-        case 'Mounthly':
-            for(let i = 0; i < responseData.length ; i++){
-                mountArr.push(responseData[i].premium);
-                annualArr.push(responseData[i].premium*12.0);
-                
-            }
-            break;
-        case 'Semi-Annual':
-            for(let i = 0; i < responseData.length ; i++){
-                mountArr.push(responseData[i].premium/6.0);
-                annualArr.push(responseData[i].premium*2.0);
-                
-            }
-            
-            break;
-        default:
-            for(let i = 0; i < responseData.length ; i++){
-                mountArr.push(responseData[i].premium/12.0);
-                annualArr.push(responseData[i].premium);
-            }
-            break;
-    }
-
-        for(let i = 0; i < responseData.length ; i++){
-            //let div = document.createElement("div")
-            //console.log('El div', div)
-            carrierCont.innerHTML = `<input type="text" id="premiumOp${i+10}" maxlength = 10"></input>`;
-            const auxNumber  = document.getElementById(`premiumOp${i+10}`);
-            auxNumber.value = responseData[i].carrier;  
-            //carrierCont.appendChild(div);
+        switch(periodInput){
+            case 'Quartely':
+                mounthValue  = responseData[i].premium/3.0;
+                annualValue = responseData[i].premium*4.0;
+                break;
+            case 'Monthly':
+                mounthValue  = responseData[i].premium;
+                annualValue = responseData[i].premium*12.0;
+                break;
+            case 'Semi-Annual':
+                mounthValue  = responseData[i].premium/6.0;
+                annualValue = responseData[i].premium*2.0;
+                break;
+            default:
+                mounthValue  = responseData[i].premium/12.0;
+                annualValue = responseData[i].premium;
+                break;
         }
- 
-    console.log('requestData Arr: ',requestData);
+    
+        carrierCont.innerHTML = `<input type="text" id="carrierOp${i+4}" maxlength = 10></input>`;
+        premiumCont.innerHTML = `<input type="number" id="premiumOp${i+4}" ></input>`;
+        annualCont.innerHTML  = `<input type="number" id="annualOp${i+4}"  ></input>`;
+        mounthCont.innerHTML  = `<input type="number" id="mounthOp${i+4}"  ></input>`;
+        
+        const auxCarrier  = document.getElementById(`carrierOp${i+4}`);
+        const auxPremium  = document.getElementById(`premiumOp${i+4}`);
+        const auxAnnual  = document.getElementById(`annualOp${i+4}`);
+        const auxMounth  = document.getElementById(`mounthOp${i+4}`);
+
+        auxCarrier.value = responseData[i].carrier;
+        auxPremium.value = responseData[i].premium;
+        auxAnnual.value  = annualValue;
+        auxMounth.value  = mounthValue;
+    }
+
 });
 
 
 ageElement.addEventListener("change",function(){
 
-    requestData.ageInput = parseInt(this.value);
-    //if( requestData[0] !== requestData[4] ) alert('Age is unconsist');
-    console.log('Age',requestData.ageInput);   
+    requestData.ageInput = parseInt(this.value); 
     console.log('reques arr', requestData);
 });

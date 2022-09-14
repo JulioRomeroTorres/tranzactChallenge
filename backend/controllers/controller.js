@@ -30,7 +30,7 @@ const getPlan = (req,res)=>{
     const {plan, age, state, datebirth} = req.query;
    
     const mysqlConnection = getConnection();
-    const query = `select *  from packages WHERE plan like '%${plan}%' AND \
+    const query = `select carrier, premium from packages WHERE plan like '%${plan}%' AND \
                              state = '${state}' AND \
                              mounth = '${mounthsYear[parseInt(datebirth)-1]}' AND \
                              maxRange >= ${parseInt(age)} AND minRange <= ${parseInt(age)};`;
